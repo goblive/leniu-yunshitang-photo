@@ -1,10 +1,14 @@
 package net.xnzn.photo.util;
 
+import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.HMac;
 import cn.hutool.crypto.digest.HmacAlgorithm;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -43,11 +47,17 @@ public class ApiSignUtil {
         return generatedSignature.equals(sign);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
+        File file = new File("E:\\1_3.jpg");
+        FileInputStream inputStream = new FileInputStream(file);
+        String imageBse64 = Base64.encode(inputStream);
+
         // 示例参数和密钥
         Map<String, Object> params = new TreeMap<>();
         params.put("custId", "131232");
         params.put("companyId", "123");
+        params.put("username", "测试");
+        params.put("base64Str", imageBse64);
 
         String secretKey = "a3411f2f74a8ebebe0f3fc95d30e4d1a";
 
