@@ -13,16 +13,14 @@ import net.xnzn.photo.service.CustPhotoService;
 import net.xnzn.photo.util.LeResponse;
 import net.xnzn.photo.util.RetCodeEnum;
 import net.xnzn.photo.vo.DeviceCustPhotoVO;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 /**
  * H5人脸识别,设备拉取特征值
@@ -32,6 +30,7 @@ import java.util.stream.Collectors;
  */
 
 @RestController
+@CrossOrigin
 @RequestMapping("custPhoto")
 public class CustPhotoController {
     /**
@@ -81,10 +80,9 @@ public class CustPhotoController {
         CustPhoto custPhoto = custPhotoService.getOne(Wrappers.lambdaQuery(CustPhoto.class)
                 .eq(CustPhoto::getCustId, devicePhotoDTO.getCustId())
                 .eq(CustPhoto::getCompanyId, devicePhotoDTO.getCompanyId()));
-        if (ObjectUtil.isEmpty(custPhoto)) {
-            return LeResponse.fail(RetCodeEnum.FAIL, "人员不存");
-        }
-        return LeResponse.succ(custPhoto.getBase64());
+        //如果没有照片返回空字符串
+        String base64 = Optional.ofNullable(custPhoto).map(CustPhoto::getBase64).orElse("");
+        return LeResponse.succ(base64);
     }
     /**
      * 删除人脸
