@@ -2,7 +2,7 @@ server:
   port: 59000
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/springboot?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://192.168.124.58:3306/springboot?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
     username: root
     password: 123456
 
@@ -14,6 +14,18 @@ logging:
     level:
         web: debug
         net.xnzn: debug
+    file:
+      name: ${LOG_FILE_PATH:/var/log}/app/yunshitang.log
+    logback:
+      rollingpolicy:
+        max-file-size: ${LOG_FILE_SIZE:200}MB
+        max-history: ${LOG_FILE_NUMBER:100}
+        total-size-cap: ${LOG_TOTAL_SIZE:30GB}
+    pattern:
+      console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint},%X{X-Trace-Id:-}-%X{trace_id:-},%X{x-tenant:-},%X{x-id:-},%X{x-name:-} %clr(%5p) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%40.40logger{39} : %-4L){cyan}%clr(:){faint} %m%n %wEx"
+      file: "%d{yyyy-MM-dd HH:mm:ss.SSS},%X{X-Trace-Id:-}-%X{trace_id:-},%X{x-tenant:-},%X{x-id:-},%X{x-name:-} %5p ${PID:- } --- [%15.15t] %40.40logger{39} :%-4L: %m%n %wEx"
+
+
 open:
   secretKey: a3411f2f74a8ebebe0f3fc95d30e4d1a
   faceApiUrl: http://8.142.137.85:7999/face/new2.0/feature
