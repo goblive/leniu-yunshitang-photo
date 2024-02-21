@@ -13,7 +13,7 @@ public class DevicePhotoDTO {
     //人员id
     private String custId;
     //增量id
-    private String updateId;
+    private Long updateId;
     //单次查询数量
     private Integer pagesize;
     //公司id

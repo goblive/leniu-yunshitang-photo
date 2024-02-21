@@ -1,7 +1,6 @@
 package net.xnzn.photo.service;
 
 
-import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;
@@ -66,12 +65,11 @@ public class CustPhotoServiceImpl extends ServiceImpl<CustPhotoMapper, CustPhoto
     //删除特征值就是置空
     @Override
     public void deletePhoto(String custId, String companyId) {
-        Snowflake snowflake = IdUtil.getSnowflake(1, 1);
-        long updateId = snowflake.nextId();
+
         this.update(Wrappers.lambdaUpdate(CustPhoto.class)
                 .set(CustPhoto::getFeatures, "")
                 .set(CustPhoto::getBase64, "")
-                .set(CustPhoto::getUpdateId, updateId)
+                .set(CustPhoto::getUpdateId, IdUtil.getSnowflake(1, 1).nextId())
                 .eq(CustPhoto::getCustId, custId)
                 .eq(CustPhoto::getCompanyId, companyId));
     }
