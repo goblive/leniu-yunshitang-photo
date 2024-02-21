@@ -1,0 +1,20 @@
+server:
+  port: 59000
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/springboot?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 123456
+
+  servlet:
+    multipart:
+      max-request-size: 100MB
+      max-file-size: 100MB
+logging:
+    level:
+        web: debug
+        net.xnzn: debug
+open:
+  secretKey: a3411f2f74a8ebebe0f3fc95d30e4d1a
+  faceApiUrl: http://8.142.137.85:7999/face/new2.0/feature
+
