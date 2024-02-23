@@ -18,6 +18,8 @@ public class OpenPhotoDTO {
     private String companyId;
     //照片base64
     private String base64Str;
+    //照片url
+    private String imageUrl;
     //签名
     private String sign;
 
